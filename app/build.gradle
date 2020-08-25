@@ -54,6 +54,7 @@ dependencies {
     // Coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // testing
 
@@ -71,8 +72,8 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$glide"
 
     // hilt
-    implementation "com.google.dagger:hilt-android:$hilt"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt"
+    implementation 'com.google.dagger:hilt-android:2.28-alpha'
+    kapt 'com.google.dagger:hilt-android-compiler:2.28-alpha'
 
     // hilt jetpack
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$jetpack_hilt"
