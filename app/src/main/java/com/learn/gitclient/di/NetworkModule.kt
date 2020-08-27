@@ -20,29 +20,22 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideBaseURL(): String {
-        return NetworkConstance.BASE_UTL
-    }
-
-
-    @Singleton
-    @Provides
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+    fun provideHttpLoggingInterceptor() : HttpLoggingInterceptor {
         return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
     @Singleton
     @Provides
-    fun providesOkhttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        val client = OkHttpClient.Builder()
-        client.addInterceptor(httpLoggingInterceptor)
-        client.callTimeout(30, TimeUnit.SECONDS)
-        client.connectTimeout(30, TimeUnit.SECONDS)
-        client.writeTimeout(30, TimeUnit.SECONDS)
-        client.readTimeout(30, TimeUnit.SECONDS)
-        return client.build()
-    }
+    fun provideOkhttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .callTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
 
+    }
 
     @Singleton
     @Provides
@@ -50,17 +43,14 @@ object NetworkModule {
         return GsonConverterFactory.create()
     }
 
+
     @Singleton
     @Provides
-    fun provideRetrofit(
-        baseUrl: String,
-        converter: Converter.Factory,
-        client: OkHttpClient
-    ): Retrofit {
+    fun provideRetrofit(converter: Converter.Factory, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(NetworkConstance.BASE_UTL)
             .addConverterFactory(converter)
-            .client(client)
+            .client(okHttpClient)
             .build()
     }
 
@@ -70,5 +60,6 @@ object NetworkModule {
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
+
 
 }

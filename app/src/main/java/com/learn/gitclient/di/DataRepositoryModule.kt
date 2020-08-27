@@ -1,7 +1,7 @@
 package com.learn.gitclient.di
 
+import com.learn.gitclient.network.ApiService
 import com.learn.gitclient.repository.DataRepository
-import com.learn.gitclient.repository.DataUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,12 +10,11 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 
 @InstallIn(ActivityRetainedComponent::class)
 @Module
-object UserDataUseModule {
-
+object DataRepositoryModule {
 
     @ActivityRetainedScoped
     @Provides
-    fun provideUserDataUseCase(dataRepository: DataRepository): DataUseCase {
-        return DataUseCase(dataRepository)
+    fun provideDataRepository(apiService: ApiService): DataRepository {
+        return DataRepository(apiService)
     }
 }
