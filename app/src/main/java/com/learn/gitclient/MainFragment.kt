@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.learn.gitclient.network.DataState
@@ -32,9 +33,9 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val response = mainViewModel.getData()
+        mainViewModel.getData()
 
-        response.observe(viewLifecycleOwner, Observer {
+        mainViewModel.publicRepoList.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is DataState.LOADING -> {
                     // show progress bar
@@ -42,6 +43,7 @@ class MainFragment : Fragment() {
                 }
 
                 is DataState.SUCCESS -> {
+                    Toast.makeText(requireContext(), it.data.get(0).name, Toast.LENGTH_LONG).show()
                     Log.d("MainFragment-success", it.data.get(0).name)
                 }
 
