@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.learn.gitclient.network.DataState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_main.*
 
 
 @AndroidEntryPoint
@@ -56,5 +58,16 @@ class MainFragment : Fragment() {
                 }
             }
         })
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btnDetails.setOnClickListener {
+            val details =  "Passing Details to naother fragment using SafeArgs"
+            val action = MainFragmentDirections.actionMainFragmentToDetailsFragment(details = details)
+            findNavController().navigate(action)
+        }
     }
 }
